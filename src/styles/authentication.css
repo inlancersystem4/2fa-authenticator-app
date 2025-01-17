@@ -1,0 +1,17 @@
+.auth-layout {
+  @apply w-full h-dvh overflow-y-auto flex items-stretch;
+}
+
+.auth-slider {
+  @apply w-full max-w-[60%] h-full sticky top-0 bg-cover bg-center;
+  background-image: url("../assets/image/auth-bg.png");
+}
+
+.auth-slider::after {
+  content: "";
+  @apply absolute inset-0 w-full h-full bg-black bg-opacity-50;
+}
+
+.auth-form-side {
+  @apply flex flex-col w-full max-w-[40%] h-full;
+}

@@ -5,15 +5,22 @@ import "./styles/index.css";
 import "./styles/font.css";
 import QueryProvider from "./context/QueryProvider";
 import App from "./app";
+import AuthLayout from "./layouts/Auth";
+import Login from "./pages/login";
+import PageNotFound from "./pages/PageNotFound";
 
 const root = document.getElementById("root");
 
 ReactDOM.createRoot(root).render(
   <QueryProvider>
-    <Toaster richColors  closeButton position="top-right" />
+    <Toaster richColors closeButton position="top-right" />
     <BrowserRouter>
       <Routes>
         <Route index element={<App />} />
+        <Route path="*" element={<PageNotFound />} />
+        <Route path="auth" element={<AuthLayout />}>
+          <Route index element={<Login />} />
+        </Route>
       </Routes>
     </BrowserRouter>
   </QueryProvider>
