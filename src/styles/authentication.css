@@ -1,5 +1,5 @@
 .auth-layout {
-  @apply w-full h-dvh overflow-y-auto flex items-stretch;
+  @apply w-full h-dvh overflow-y-auto flex overflow-x-hidden items-stretch;
 }
 
 .auth-slider {
@@ -9,9 +9,21 @@
 
 .auth-slider::after {
   content: "";
-  @apply absolute inset-0 w-full h-full bg-black bg-opacity-50;
+  @apply absolute inset-0 w-full h-full bg-black bg-opacity-65;
 }
 
 .auth-form-side {
   @apply flex flex-col w-full max-w-[40%] h-full;
+}
+
+.custom-pagination {
+  @apply flex  items-center gap-2;
+}
+
+.custom-pagination button {
+  @apply w-3.5 h-1.5 rounded-full bg-white hover:bg-blueSapphire transition-all;
+}
+
+.custom-pagination button.active {
+  @apply bg-blueSapphire w-10;
 }

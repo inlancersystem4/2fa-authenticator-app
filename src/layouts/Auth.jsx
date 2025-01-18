@@ -11,7 +11,9 @@ export default function AuthLayout() {
           <Link to="/">
             <img src={Logo} alt="logo" width="160" height="auto" />
           </Link>
+          <div className="w-full relative">
           <AuthSilder />
+          </div>
         </div>
       </div>
       <div className="auth-form-side">
