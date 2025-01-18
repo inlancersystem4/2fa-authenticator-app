@@ -7,7 +7,8 @@ import QueryProvider from "./context/QueryProvider";
 import SwitcherProvider from "./context/SwitcherProvider";
 import App from "./app";
 import AuthLayout from "./layouts/Auth";
-import Login from "./pages/login";
+import Login from "./pages/Login";
+import QRScan from "./pages/QrScan";
 import PageNotFound from "./pages/PageNotFound";
 
 const root = document.getElementById("root");
@@ -22,6 +23,7 @@ ReactDOM.createRoot(root).render(
           <Route path="*" element={<PageNotFound />} />
           <Route path="auth" element={<AuthLayout />}>
             <Route index element={<Login />} />
+            <Route path="qr-scanner" element={<QRScan />} />
           </Route>
         </Routes>
       </BrowserRouter>

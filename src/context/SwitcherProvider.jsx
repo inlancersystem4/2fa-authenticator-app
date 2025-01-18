@@ -6,8 +6,8 @@ import {
 } from "react-css-theme-switcher";
 
 const themes = {
-  light: "public/light.css",
-  dark: "public/dark.css",
+  light: "/light.css",
+  dark: "/dark.css",
 };
 
 export default function SwitcherProvider({ children }) {
