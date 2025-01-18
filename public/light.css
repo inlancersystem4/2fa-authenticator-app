@@ -1,0 +1,15 @@
+:root {
+  --light-background: 0 0% 98%; /* #fafafa */
+  --medium-gray: 0 0% 65%; /* #a6a6a6 */
+  --light-gray: 240 6% 90%; /* #e6e6e6 */
+  --dark-gray: 0 0% 50%; /* #808080 */
+  --charcoal: 0 0% 27%; /* #444444 */
+  --gray-medium: 0 0% 53%; /* #868686 */
+  --error-red: 0 100% 66%; /* #ff6666 */
+  --soft-pink: 0 100% 97%; /* #ffccff */
+  --success-green: 126 59% 61%; /* #7bcc67 */
+  --light-green: 127 100% 97%; /* #b3ffcc */
+  --neutral-gray: 0 0% 61%; /* #999999 */
+  --blue-sapphire: 205 100% 31%; /* #005A9C */
+  --light-grayish-lavender: 240 6% 90%; /* #E4E4E7 */
+}

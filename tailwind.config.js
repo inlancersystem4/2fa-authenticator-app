@@ -20,6 +20,7 @@ export default {
         lightGreen: "hsl(var(--light-green) / <alpha-value>)",
         neutralGray: "hsl(var(--neutral-gray) / <alpha-value>)",
         blueSapphire: "hsl(var(--blue-sapphire) / <alpha-value>)",
+        lightGrayishLavender: "hsl(var(--light-grayish-lavender) / <alpha-value>)",
       },
     },
   },

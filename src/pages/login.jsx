@@ -1,5 +1,3 @@
-export default function Login(){
-    return(
-        <h6> lorem2345 </h6>
-    )
+export default function Login() {
+  return <h6> lorem234 </h6>;
 }

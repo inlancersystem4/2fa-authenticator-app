@@ -2,8 +2,16 @@ import { Link, Outlet } from "react-router";
 import "../styles/authentication.css";
 import Logo from "../assets/image/caprock-logo.svg";
 import AuthSilder from "../components/AuthSilder";
+import ThemeSwitch from "../components/ThemeSwitch";
+import { useThemeSwitcher } from "react-css-theme-switcher";
 
 export default function AuthLayout() {
+  const { currentTheme, switcher, themes } = useThemeSwitcher();
+
+  const toggleDarkMode = () => {
+    switcher({ theme: currentTheme !== "light" ? themes.light : themes.dark });
+  };
+
   return (
     <main className="auth-layout">
       <div className="auth-slider">
@@ -11,8 +19,8 @@ export default function AuthLayout() {
           <Link to="/">
             <img src={Logo} alt="logo" width="160" height="auto" />
           </Link>
-          <div className="w-full relative">
-          <AuthSilder />
+          <div className="w-full  relative">
+            <AuthSilder />
           </div>
         </div>
       </div>
@@ -23,14 +31,15 @@ export default function AuthLayout() {
               <label className="font-serif text-xs leading-none">
                 <span className="text-darkGray">Appearance</span>
               </label>
-              <label className="font-serif text-xs leading-none">
-                Light Mode
+              <label className="font-serif text-xs leading-none capitalize">
+                {currentTheme} Mode
               </label>
             </div>
             <p className="text-darkGray font-serif">:</p>
+            <ThemeSwitch toggleDarkMode={toggleDarkMode} />
           </div>
         </div>
-        <div className="w-full h-full flex flex-col items-center justify-center">
+        <div className="w-full p-3 h-full flex items-center justify-center">
           <Outlet />
         </div>
       </div>
