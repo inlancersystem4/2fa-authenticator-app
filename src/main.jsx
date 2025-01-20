@@ -9,6 +9,8 @@ import App from "./app";
 import AuthLayout from "./layouts/Auth";
 import Login from "./pages/Login";
 import QRScan from "./pages/QrScan";
+import RecoveryCode from "./pages/RecoveryCode";
+import ApproveCode from "./pages/ApproveCode";
 import PageNotFound from "./pages/PageNotFound";
 
 const root = document.getElementById("root");
@@ -24,6 +26,8 @@ ReactDOM.createRoot(root).render(
           <Route path="auth" element={<AuthLayout />}>
             <Route index element={<Login />} />
             <Route path="qr-scanner" element={<QRScan />} />
+            <Route path="recovery-code" element={<RecoveryCode />} />
+            <Route path="approve-code" element={<ApproveCode />} />
           </Route>
         </Routes>
       </BrowserRouter>

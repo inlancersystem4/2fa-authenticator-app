@@ -25,6 +25,7 @@ export default {
         silverGray: "hsl(var(--silver-gray) / <alpha-value>)",
         gainsboro: "hsl(var(--gainsboro) / <alpha-value>)",
         spanishGray: "hsl(var(--spanish-gray) / <alpha-value>)",
+        veryPaleGray: "hsl(var(--very-pale-gray) / <alpha-value>)",
       },
     },
   },
