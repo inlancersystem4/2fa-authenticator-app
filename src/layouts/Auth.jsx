@@ -39,7 +39,7 @@ export default function AuthLayout() {
             <ThemeSwitch toggleDarkMode={toggleDarkMode} />
           </div>
         </div>
-        <div className="w-full p-3 h-full flex items-center justify-center">
+        <div className="w-full sm:py-3 px-3 py-10 h-full flex items-center justify-center">
           <Outlet />
         </div>
       </div>
