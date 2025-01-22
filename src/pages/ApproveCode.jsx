@@ -1,7 +1,22 @@
 import { Button } from "@headlessui/react";
 import { Mail } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router";
 
 export default function ApproveCode() {
+  const [isLoginType, setIsLoginType] = useState(false);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const type = queryParams.get("type");
+
+    if (type === "login") {
+      setIsLoginType(true);
+    }
+  }, [location.search]);
+
   return (
     <div className="space-y-14 max-w-96 mx-auto">
       <div className="space-y-5 text-center">
@@ -29,6 +44,23 @@ export default function ApproveCode() {
         >
           Get a New Code
         </Button>
+        {isLoginType && (
+          <div className="space-y-4 text-center">
+            <Link
+              to="/"
+              className="block text-center underline text-royalBlue font-semibold"
+            >
+              Try your Authentication Code instead
+            </Link>
+            <p>- or -</p>
+            <Link
+              to="/"
+              className="block text-coolGray underline font-semibold text-center"
+            >
+              Use your Recovery Code
+            </Link>
+          </div>
+        )}
       </div>
     </div>
   );

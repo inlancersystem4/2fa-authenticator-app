@@ -8,13 +8,14 @@ import {
 } from "@headlessui/react";
 import { useForm } from "react-hook-form";
 import { CircleUserRound, Eye, EyeOff } from "lucide-react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { post } from "../utils/axiosWrapper";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 
 export default function Login() {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -24,13 +25,15 @@ export default function Login() {
   const [isPassword, setIsPassword] = useState(true);
 
   const signInFn = async (data) => {
+    const formData = new FormData();
+    formData.append("user_email", data.email);
+    formData.append("user_password", data.password);
+    console.log(formData);
     try {
-      const response = await post("sign-in", {
-        user_email: data.email,
-        user_password: data.password,
-      });
+      const response = await post("sign-in", formData);
 
       if (response.success == 1) {
+        navigate("/auth/approve-code?type=login");
         toast.success(response.message);
       } else {
         toast.error(response.message);
