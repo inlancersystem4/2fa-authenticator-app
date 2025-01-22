@@ -1,0 +1,47 @@
+Sign-in:
+
+  Check if the user exists.
+  If the user does not exist, return an error.
+  If the user exists, proceed to step 2.
+
+
+Validate Credentials:
+
+  Check if the email and password match.
+  If either is incorrect, return an error.
+  If both are correct, return a success response.
+
+
+Success Response:
+
+  On successful sign-in, send the user_id (for socket channel).
+  Confirm whether the user’s account is set up or not.
+
+
+Account Setup (if not completed):
+
+  Share a QR code with the user.
+  The user scans the QR code via the mobile app.
+  The mobile app sends a 2-digit code, which is verified.
+  Upon successful verification, redirect to the web app dashboard with a session.
+
+
+Account Setup with 2-Digit Code:
+
+  The user receives a 2-digit code notification (every time a new code is generated).
+  Optionally, include a recovery code in the notification.
+
+
+Instead Code Verification:
+
+  If the "instead code" is used:
+  Verify the code on the mobile app.
+  After successful verification, update the mobile app code and redirect the user to the web app dashboard with a session.
+
+
+Recovery Code Verification:
+
+  If the "recovery code" is used:
+  Verify the recovery code.
+  Upon successful verification, redirect to the web app dashboard with a session.
+  Remove the submitted recovery code once verified.
