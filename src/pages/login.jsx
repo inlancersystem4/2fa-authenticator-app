@@ -10,6 +10,9 @@ import { useForm } from "react-hook-form";
 import { CircleUserRound, Eye, EyeOff } from "lucide-react";
 import { Link } from "react-router";
 import { useState } from "react";
+import { post } from "../utils/axiosWrapper";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Login() {
   const {
@@ -20,7 +23,32 @@ export default function Login() {
 
   const [isPassword, setIsPassword] = useState(true);
 
-  const onSubmit = (data) => console.log(data);
+  const signInFn = async (data) => {
+    try {
+      const response = await post("sign-in", {
+        user_email: data.email,
+        user_password: data.password,
+      });
+
+      if (response.success == 1) {
+        toast.success(response.message);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      signInFn(formData);
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
@@ -82,16 +110,19 @@ export default function Login() {
               )}
               <Link
                 to="/"
-                className="block w-full text-end text-base text-spanishGray hover:underline focus:underline"
+                className={`block w-full text-end text-base text-spanishGray hover:underline focus:underline ${
+                  mutation.isPending ? "pointer-events-none" : ""
+                }`}
               >
                 Forgot Password?
               </Link>
             </Field>
           </div>
           <Button
+            disabled={mutation.isPending}
             type="submit"
             className="rounded-full w-full bg-black text-white flex items-center justify-center text-lg gap-2.5 py-2.5
-                  hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+                  hover:bg-gray-800 disabled:opacity-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >
             <CircleUserRound className="w-5 h-5" />
             Log in
@@ -104,8 +135,10 @@ export default function Login() {
           </p>
           <Link
             to="/"
-            className="rounded-full w-full text-black border border-black bg-transparent flex items-center justify-center text-lg gap-2.5 py-2.5
-                   focus:outline-none hover:bg-lightBackground focus:ring-2 focus:ring-black focus:ring-offset-2"
+            className={`rounded-full w-full text-black border border-black bg-transparent flex items-center justify-center text-lg gap-2.5 py-2.5
+                   focus:outline-none hover:bg-lightBackground focus:ring-2 focus:ring-black focus:ring-offset-2 ${
+                     mutation.isPending ? "pointer-events-none" : ""
+                   }`}
           >
             <CircleUserRound className="w-5 h-5" />
             Sign up
