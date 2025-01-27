@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Mail } from "lucide-react";
 import { Button } from "@headlessui/react";
+import { useSelector } from "react-redux";
 import OtpInput from "react-otp-input";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 
 export default function AuthenticationCode() {
+  const email = useSelector((state) => state.user.email);
   const { handleSubmit } = useForm();
   const [otp, setOtp] = useState("");
 
@@ -27,7 +29,7 @@ export default function AuthenticationCode() {
           </p>
           <p className="text-lg text-spanishGray font-medium flex items-center gap-1 justify-center">
             <Mail />
-            johnmayer@gmail.com
+            {email}
           </p>
         </div>
       </div>
@@ -42,7 +44,7 @@ export default function AuthenticationCode() {
         />
         <div className="space-y-3">
           <Link
-            to="/"
+            to="/auth/recovery-code"
             className="block w-full text-end text-base text-spanishGray underline focus:underline"
           >
             Use your Recovery Code

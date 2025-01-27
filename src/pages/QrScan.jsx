@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 
 export default function QRScan() {
-  const qrCode = useSelector((state) => state.authReducer);
+  const qrCode = useSelector((state) => state.auth.qrCode);
 
   return (
     <div className="space-y-6 w-full max-w-96 mx-auto">
@@ -14,7 +14,11 @@ export default function QRScan() {
           easily log in.
         </h4>
       </div>
-      {qrCode}
+      <img
+        src={`data:image/png;base64,${qrCode}`}
+        alt="QR Code"
+        className="max-w-full h-auto"
+      />
     </div>
   );
 }

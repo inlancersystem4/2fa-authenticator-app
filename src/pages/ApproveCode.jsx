@@ -1,12 +1,51 @@
 import { Button } from "@headlessui/react";
 import { Mail } from "lucide-react";
 import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router";
+import { useMutation } from "@tanstack/react-query";
+import { post } from "../utils/axiosWrapper";
+import { useDispatch } from "react-redux";
+import { setCode } from "../redux/actions/actions";
+import { toast } from "sonner";
 
 export default function ApproveCode() {
+  const dispatch = useDispatch();
+  const code = useSelector((state) => state.auth.verified_code);
+  const email = useSelector((state) => state.user.email);
+  const userID = useSelector((state) => state.user.userID);
+  const fcmToken = useSelector((state) => state.auth.fcm);
   const [isLoginType, setIsLoginType] = useState(false);
 
   const location = useLocation();
+
+  const signInFn = async () => {
+    const formData = new FormData();
+    formData.append("user_id", userID);
+    formData.append("user_fcm_token", fcmToken);
+
+    try {
+      const response = await post("resend-two-digit-code", formData);
+
+      if (response.success == 1) {
+        return response.data;
+      } else {
+        toast.error(response.message);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: signInFn,
+    onSuccess: (data) => {
+      dispatch(setCode(data.two_digit_code));
+    },
+    onError: (e) => {
+      toast.error(e);
+    },
+  });
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -29,32 +68,37 @@ export default function ApproveCode() {
           </p>{" "}
           <p className="text-lg text-spanishGray font-medium flex items-center gap-1 justify-center">
             <Mail />
-            johnmayer@gmail.com
+            {email}
           </p>
         </div>
       </div>
       <div className="space-y-10">
         <div className="w-fit mx-auto py-2.5 px-9 rounded-xl bg-veryPaleGray">
-          <h4 className="font-serif font-semibold text-5xl text-center">83</h4>
+          <h4 className="font-serif font-semibold text-5xl text-center">
+            {code}
+          </h4>
         </div>
         <Button
-          type="submit"
-          className="rounded-full w-full bg-black  text-white flex items-center justify-center text-lg gap-2.5 py-2.5
-                          hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+          type="button"
+          onClick={() => mutation.mutate()}
+          disabled={mutation.isPending}
+          className={`rounded-full w-full bg-black text-white flex items-center justify-center text-lg gap-2.5 py-2.5 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 ${
+            mutation.isPending ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Get a New Code
+          {mutation.isPending ? "Loading..." : "Get a New Code"}
         </Button>
         {isLoginType && (
           <div className="space-y-4 text-center">
             <Link
-              to="/"
+              to="/auth/authentication-code"
               className="block text-center underline text-royalBlue font-semibold"
             >
               Try your Authentication Code instead
             </Link>
             <p>- or -</p>
             <Link
-              to="/"
+              to="/auth/recovery-code"
               className="block text-coolGray underline font-semibold text-center"
             >
               Use your Recovery Code

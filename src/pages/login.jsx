@@ -11,7 +11,12 @@ import { CircleUserRound, Eye, EyeOff } from "lucide-react";
 import { Link, useNavigate } from "react-router";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setQrCode } from "../redux/actions/actions";
+import {
+  setQrCode,
+  setCode,
+  setUserID,
+  setUserEmail,
+} from "../redux/actions/actions";
 import { post } from "../utils/axiosWrapper";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
@@ -19,7 +24,7 @@ import { useMutation } from "@tanstack/react-query";
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const fcmToken = useSelector((state) => state.authReducer);
+  const fcmToken = useSelector((state) => state.auth.fcm);
 
   const {
     register,
@@ -34,15 +39,18 @@ export default function Login() {
     formData.append("user_email", data.email);
     formData.append("user_password", data.password);
     formData.append("user_fcm_token", fcmToken);
-    console.log(formData);
+
     try {
       const response = await post("sign-in", formData);
 
       if (response.success == 1) {
+        dispatch(setUserEmail(data.email));
         if (response.data.qr_code_base64) {
           dispatch(setQrCode(response.data.qr_code_base64));
           navigate("/auth/qr-scanner");
         } else {
+          dispatch(setCode(response.data.two_digit_code));
+          dispatch(setUserID(response.data.user_id));
           navigate("/auth/approve-code?type=login");
         }
         toast.success(response.message);
