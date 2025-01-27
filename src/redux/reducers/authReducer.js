@@ -1,13 +1,17 @@
 import { createReducer } from "@reduxjs/toolkit";
-import { setQrToken } from "../actions/actions";
+import { setQrCode , setFcm } from "../actions/actions";
 
 const initialState = {
-  qrToken: "",
+  qrCode: "",
+  fcm: "",
 };
 
 const authReducer = createReducer(initialState, (builder) => {
-  builder.addCase(setQrToken, (state, action) => {
-    state.qrToken = action.payload;
+  builder.addCase(setQrCode, (state, action) => {
+    state.qrCode = action.payload;
+  });
+  builder.addCase(setFcm, (state, action) => {
+    state.fcm = action.payload;
   });
 });
 

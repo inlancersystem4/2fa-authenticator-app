@@ -1,3 +1,4 @@
 import { createAction } from "@reduxjs/toolkit";
 
-export const setQrToken = createAction("SET_QR_TOKEN");
+export const setQrCode = createAction("SET_QR");
+export const setFcm = createAction("SET_FCM");
