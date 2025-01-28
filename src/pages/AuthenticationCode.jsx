@@ -5,13 +5,41 @@ import { useSelector } from "react-redux";
 import OtpInput from "react-otp-input";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import { post } from "../utils/axiosWrapper";
+import { toast } from "sonner";
+import { useMutation } from "@tanstack/react-query";
 
 export default function AuthenticationCode() {
   const email = useSelector((state) => state.user.email);
   const { handleSubmit } = useForm();
   const [otp, setOtp] = useState("");
 
-  const onSubmit = (data) => console.log(data);
+  const codeApprovalFn = async () => {
+    const formData = new FormData();
+    formData.append("user_email", otp);
+
+    try {
+      const response = await post("", formData);
+
+      if (response.success == 1) {
+        toast.success(response.message);
+      } else {
+        toast.error(response.message);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: (formData) => {
+      codeApprovalFn(formData);
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutation.mutate(data);
+  };
 
   return (
     <form
@@ -20,11 +48,11 @@ export default function AuthenticationCode() {
     >
       <div className="space-y-8">
         <h1 className="text-[28px] font-medium text-center">
-          Log in to Caprock
+          Log in to Inlancer
         </h1>
         <div className="space-y-2">
           <p className="text-center">
-            Enter the number displayed on the homepage of your Caprock mobile
+            Enter the number displayed on the homepage of your Inlancer mobile
             app in the authentication section.
           </p>
           <p className="text-lg text-spanishGray font-medium flex items-center gap-1 justify-center">
@@ -51,6 +79,7 @@ export default function AuthenticationCode() {
           </Link>
           <Button
             type="submit"
+            disabled={mutation.isPending}
             className="rounded-full w-full bg-black  text-white flex items-center justify-center text-lg gap-2.5 py-2.5
                   hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
           >

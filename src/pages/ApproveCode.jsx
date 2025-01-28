@@ -64,7 +64,7 @@ export default function ApproveCode() {
         </h1>
         <div className="space-y-2">
           <p>
-            Enter the number you see below in your Caprock Mobile App to sign in
+            Enter the number you see below in your Inlancer Mobile App to sign in
           </p>{" "}
           <p className="text-lg text-spanishGray font-medium flex items-center gap-1 justify-center">
             <Mail />

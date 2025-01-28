@@ -76,7 +76,7 @@ export default function Login() {
     <form className="w-full" onSubmit={handleSubmit(onSubmit)}>
       <Fieldset className="w-full max-w-96 space-y-8 mx-auto">
         <Legend className="text-3xl text-black font-medium text-center">
-          Log in to Caprock
+          Log in to Inlancer
         </Legend>
         <div className="space-y-5">
           <div className="space-y-3">

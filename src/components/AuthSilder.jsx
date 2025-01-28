@@ -7,25 +7,25 @@ import { Link } from "react-router";
 const sliderArray = [
   {
     id: 1,
-    title: "Start your investment journey with <b>Caprock</b>",
+    title: "Start your investment journey with <b>Inlancer</b>",
     subTitle:
-      "Join Caprock today and start investing with <b>0 commission*</b>",
+      "Join Inlancer today and start investing with <b>0 commission*</b>",
   },
   {
     id: 2,
-    title: "Unlock the potential of your assets with <b>Caprock</b>",
+    title: "Unlock the potential of your assets with <b>Inlancer</b>",
     subTitle:
       "Invest smartly and securely with <b>low fees*</b> and expert guidance.",
   },
   {
     id: 5,
-    title: "Achieve your financial goals with <b>Caprock</b>",
+    title: "Achieve your financial goals with <b>Inlancer</b>",
     subTitle:
       "Let us guide you towards better financial outcomes with our trusted tools and insights.",
   },
   {
     id: 6,
-    title: "Get personalized advice from <b>Caprock</b>",
+    title: "Get personalized advice from <b>Inlancer</b>",
     subTitle:
       "Our experts offer tailored recommendations to maximize your investment returns.",
   }
