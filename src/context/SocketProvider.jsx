@@ -1,12 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { io } from "socket.io-client";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setSocketID } from "../redux/actions/actions";
 import PropTypes from "prop-types";
 
 const SocketContext = createContext(null);
 
 export default function SocketProvider({ children }) {
+  const userID = useSelector((state) => state.user.userID);
   const dispatch = useDispatch();
   const [socket, setSocket] = useState(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -15,6 +16,7 @@ export default function SocketProvider({ children }) {
     const socketURL = "http://192.168.0.42:8040";
 
     const socketInstance = io(socketURL, {
+      query: { user_id: userID },
       autoConnect: false,
       transports: ["websocket", "polling"],
     });
@@ -48,7 +50,7 @@ export default function SocketProvider({ children }) {
       socketInstance.off("reconnect_attempt");
       socketInstance.disconnect();
     };
-  }, [dispatch]);
+  }, [dispatch, userID]);
 
   return (
     <SocketContext.Provider value={{ socket, isConnected }}>

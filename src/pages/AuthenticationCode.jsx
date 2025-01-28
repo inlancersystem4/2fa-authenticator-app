@@ -4,24 +4,28 @@ import { Button } from "@headlessui/react";
 import { useSelector } from "react-redux";
 import OtpInput from "react-otp-input";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { post } from "../utils/axiosWrapper";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 
 export default function AuthenticationCode() {
   const email = useSelector((state) => state.user.email);
+  const userID = useSelector((state) => state.user.userID);
+  const navigate = useNavigate();
   const { handleSubmit } = useForm();
   const [otp, setOtp] = useState("");
 
   const codeApprovalFn = async () => {
     const formData = new FormData();
-    formData.append("user_email", otp);
+    formData.append("user_id", userID);
+    formData.append("totp_code", otp);
 
     try {
-      const response = await post("", formData);
+      const response = await post("verify-totp", formData);
 
       if (response.success == 1) {
+        navigate("/dashboard");
         toast.success(response.message);
       } else {
         toast.error(response.message);

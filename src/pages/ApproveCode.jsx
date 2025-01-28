@@ -1,16 +1,18 @@
 import { Button } from "@headlessui/react";
 import { Mail } from "lucide-react";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { post } from "../utils/axiosWrapper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCode } from "../redux/actions/actions";
+import { useSocket } from "../context/SocketProvider";
 import { toast } from "sonner";
 
 export default function ApproveCode() {
   const dispatch = useDispatch();
+  const { socket } = useSocket();
+  const navigate = useNavigate();
   const code = useSelector((state) => state.auth.verified_code);
   const email = useSelector((state) => state.user.email);
   const userID = useSelector((state) => state.user.userID);
@@ -56,6 +58,22 @@ export default function ApproveCode() {
     }
   }, [location.search]);
 
+  useEffect(() => {
+    if (socket) {
+      socket.on("code_verify", (data) => {
+        if (data.success == 1) {
+          navigate("/dashboard");
+        } else {
+          mutation.mutate();
+          toast.error(data.message);
+        }
+      });
+      return () => {
+        socket.off("code_verify");
+      };
+    }
+  }, [socket, navigate, mutation]);
+
   return (
     <div className="space-y-14 max-w-96 mx-auto">
       <div className="space-y-5 text-center">
@@ -64,7 +82,8 @@ export default function ApproveCode() {
         </h1>
         <div className="space-y-2">
           <p>
-            Enter the number you see below in your Inlancer Mobile App to sign in
+            Enter the number you see below in your Inlancer Mobile App to sign
+            in
           </p>{" "}
           <p className="text-lg text-spanishGray font-medium flex items-center gap-1 justify-center">
             <Mail />

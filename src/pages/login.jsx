@@ -47,6 +47,7 @@ export default function Login() {
         dispatch(setUserEmail(data.email));
         if (response.data.qr_code_base64) {
           dispatch(setQrCode(response.data.qr_code_base64));
+          dispatch(setUserID(response.data.user_id));
           navigate("/auth/qr-scanner");
         } else {
           dispatch(setCode(response.data.two_digit_code));
