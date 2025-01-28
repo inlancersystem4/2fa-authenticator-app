@@ -19,10 +19,10 @@ export default function RecoveryCode() {
   const recoveryCodeFn = async () => {
     const formData = new FormData();
     formData.append("user_id", userID);
-    formData.append("totp_code", otp);
+    formData.append("recovery_code", otp);
 
     try {
-      const response = await post("", formData);
+      const response = await post("login-recovery-code", formData);
 
       if (response.success == 1) {
         navigate("/dashboard");
