@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router";
 import { useMutation } from "@tanstack/react-query";
 import { post } from "../utils/axiosWrapper";
 import { useDispatch, useSelector } from "react-redux";
-import { setCode } from "../redux/actions/actions";
+import { setCode, setToken } from "../redux/actions/actions";
 import { useSocket } from "../context/SocketProvider";
 import { toast } from "sonner";
 
@@ -62,6 +62,7 @@ export default function ApproveCode() {
     if (socket) {
       socket.on("code_verify", (data) => {
         if (data.success == 1) {
+          dispatch(setToken("yyayayay"));
           navigate("/dashboard");
         } else {
           mutation.mutate();
@@ -72,7 +73,7 @@ export default function ApproveCode() {
         socket.off("code_verify");
       };
     }
-  }, [socket, navigate, mutation]);
+  }, [socket, navigate, mutation, dispatch]);
 
   return (
     <div className="space-y-14 max-w-96 mx-auto">

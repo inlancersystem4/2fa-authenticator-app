@@ -1,16 +1,28 @@
-import { Link, Outlet } from "react-router";
+import { Link, Outlet, useNavigate } from "react-router";
 import "../styles/authentication.css";
 import Logo from "../assets/image/caprock-logo.svg";
 import AuthSilder from "../components/AuthSilder";
 import ThemeSwitch from "../components/ThemeSwitch";
 import { useThemeSwitcher } from "react-css-theme-switcher";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 export default function AuthLayout() {
   const { currentTheme, switcher, themes } = useThemeSwitcher();
+  const navigate = useNavigate();
+  const token = useSelector((state) => state.session.token);
 
   const toggleDarkMode = () => {
     switcher({ theme: currentTheme !== "light" ? themes.light : themes.dark });
   };
+
+  useEffect(() => {
+    if (token) {
+      navigate("/dashboard");
+    } else {
+      navigate("/auth");
+    }
+  }, [token, navigate]);
 
   return (
     <main className="auth-layout">

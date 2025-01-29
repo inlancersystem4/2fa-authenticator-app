@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Mail } from "lucide-react";
 import { Button } from "@headlessui/react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import OtpInput from "react-otp-input";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
+import { setToken } from "../redux/actions/actions";
 import { post } from "../utils/axiosWrapper";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 
 export default function AuthenticationCode() {
+  const dispatch = useDispatch();
   const email = useSelector((state) => state.user.email);
   const userID = useSelector((state) => state.user.userID);
   const navigate = useNavigate();
@@ -26,6 +28,7 @@ export default function AuthenticationCode() {
 
       if (response.success == 1) {
         navigate("/dashboard");
+        dispatch(setToken("yyayayay"));
         toast.success(response.message);
       } else {
         toast.error(response.message);
@@ -84,10 +87,12 @@ export default function AuthenticationCode() {
           <Button
             type="submit"
             disabled={mutation.isPending}
-            className="rounded-full w-full bg-black  text-white flex items-center justify-center text-lg gap-2.5 py-2.5
-                  hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+            className={`rounded-full w-full bg-black  text-white flex items-center justify-center text-lg gap-2.5 py-2.5
+                  hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 ${
+                    mutation.isPending ? "opacity-50 cursor-not-allowed" : ""
+                  }`}
           >
-            Submit
+            {mutation.isPending ? "Loading..." : "Submit"}
           </Button>
         </div>
       </div>

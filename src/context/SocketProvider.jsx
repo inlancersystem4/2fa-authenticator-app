@@ -13,7 +13,7 @@ export default function SocketProvider({ children }) {
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
-    const socketURL = "http://192.168.0.42:8040";
+    const socketURL = "http://192.168.87.94:8040";
 
     const socketInstance = io(socketURL, {
       query: { user_id: userID },
